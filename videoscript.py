@@ -8,6 +8,7 @@ MIN_DURATION = 20
 MAX_DURATION = 58
 
 class VideoScript:
+    postId: ""
     title = ""
     fileName = ""
     titleSCFile = ""
@@ -16,6 +17,7 @@ class VideoScript:
     frames = []
 
     def __init__(self, url, title, fileId) -> None:
+        self.postId = fileId
         self.fileName = f"{datetime.today().strftime('%Y-%m-%d')}-{fileId}"
         self.url = url
         self.title = title
