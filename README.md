@@ -1,8 +1,8 @@
 # Reddit Video Generator
 
-*This project is further explained in [this video](https://youtu.be/ZmSb3LZDdf0)*
+# This is a fork of https://github.com/Shifty-The-Dev/RedditVideoGenerator just because I needed to make some changes to make it work for me, and I want to further work on some features
 
-*This code is meant only for educational reference and will not be maintained. Because of this, the repo is archived and is in a read-only state*
+*This project is further explained in [this video](https://youtu.be/ZmSb3LZDdf0)*
 
 ---
 This program generates a .mp4 video automatically by querying the top post on the
