@@ -1,11 +1,11 @@
-import pyttsx3
+import torch
+from TTS.api import TTS
 
 voiceoverDir = "Voiceovers"
 
 def create_voice_over(fileName, text):
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     filePath = f"{voiceoverDir}/{fileName}.mp3"
-    engine = pyttsx3.init()
-    engine.setProperty('voice', 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_DAVID_11.0')
-    engine.save_to_file(text, filePath)
-    engine.runAndWait()
+    tts = TTS("tts_models/en/multi-dataset/tortoise-v2").to(device)
+    tts.tts_to_file(text=text, file_path=filePath)
     return filePath
