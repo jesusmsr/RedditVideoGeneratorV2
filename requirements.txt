@@ -1,0 +1,12 @@
+
+bs4==0.0.2
+espeakng==1.0.3
+ipython==8.26.0
+moviepy==1.0.3
+objprint==0.2.3
+praw==7.7.1
+PyYAML==6.0.1
+scipy==1.14.0
+selenium==4.22.0
+TTS==0.22.0
+
