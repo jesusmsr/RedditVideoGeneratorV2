@@ -7,6 +7,8 @@ from os.path import isfile, join
 import os
 import glob
 
+SONGS_DIRECTORY = 'Music'
+
 def createVideo():
     config = configparser.ConfigParser()
     config.read('config.ini')
@@ -59,8 +61,12 @@ def createVideo():
     contentOverlay = concatenate_videoclips(clips).set_position(("center", "center"))
     
     # Pick random background song
-    background_music = AudioFileClip('Music/1.mp3')
+    songs = [file for file in os.listdir(SONGS_DIRECTORY) if os.path.isfile(os.path.join(SONGS_DIRECTORY, file))]
     
+    random_file = random.choice(songs)
+    print(f"Randomly selected song: {random_file}")
+    print(random_file)
+    background_music = AudioFileClip(f'{SONGS_DIRECTORY}/{random_file}')
     
     # Pick a random part of the song
     max_start_time = background_music.duration - contentOverlay.duration
@@ -125,6 +131,6 @@ def rename_files(directory_path, template="ShortTemplate"):
 if __name__ == "__main__":
     
     background_videos_directory_path = 'BackgroundVideos'
-    rename_files(background_videos_directory_path)
+    #rename_files(background_videos_directory_path)
     
     createVideo()

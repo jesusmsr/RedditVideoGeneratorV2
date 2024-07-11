@@ -3,8 +3,8 @@ from moviepy.editor import AudioFileClip
 import voiceover
 
 MAX_WORDS_PER_COMMENT = 100
-MIN_COMMENTS_FOR_FINISH = 4
-MIN_DURATION = 20
+MIN_COMMENTS_FOR_FINISH = 6
+MIN_DURATION = 30
 MAX_DURATION = 58
 
 class VideoScript:
