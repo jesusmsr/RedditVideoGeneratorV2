@@ -8,7 +8,7 @@ MIN_DURATION = 20
 MAX_DURATION = 58
 
 class VideoScript:
-    postId: ""
+    postId = ""
     title = ""
     fileName = ""
     titleSCFile = ""

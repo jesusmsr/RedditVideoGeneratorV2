@@ -2,6 +2,8 @@ from moviepy.editor import *
 import reddit, screenshot, time, subprocess, random, configparser, sys, math
 from os import listdir
 from os.path import isfile, join
+import os
+import glob
 
 def createVideo():
     config = configparser.ConfigParser()
@@ -73,6 +75,17 @@ def createVideo():
         bitrate = bitrate
     )
     print(f"Video completed in {time.time() - startTime}")
+    
+    temp_files = glob.glob('Voiceovers/temp/*')
+    screenshots = glob.glob('Screenshots/*')
+    
+    for f in screenshots:
+        os.remove(f)
+    
+    for f in temp_files:
+        os.remove(f)
+    
+    print(f"Removed temp files")
 
     # Preview in VLC for approval before uploading
     if (config["General"].getboolean("PreviewBeforeUpload")):
@@ -87,4 +100,5 @@ def createVideo():
     print(f"Total time: {endTime - startTime}")
 
 if __name__ == "__main__":
+    print(' MAIN')
     createVideo()

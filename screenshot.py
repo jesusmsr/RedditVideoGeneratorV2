@@ -31,6 +31,7 @@ def __setupDriver(url: str):
     options = webdriver.FirefoxOptions()
     options.headless = False
     options.enable_mobile = False
+    options.add_argument('--disable-notifications')
     driver = webdriver.Firefox(options=options)
     wait = WebDriverWait(driver, 10)
 

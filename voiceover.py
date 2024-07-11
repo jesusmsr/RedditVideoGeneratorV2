@@ -1,11 +1,23 @@
-import torch
-from TTS.api import TTS
+from gtts import gTTS
+from pydub import AudioSegment
+from pydub.effects import speedup
 
-voiceoverDir = "Voiceovers"
+text = 'Hello everyone. Welcome to this video. Today we will do a simple text-to-speech module with python. We are using the GitHub module called TTS.'
+
+voiceoverDir = 'Voiceovers'
 
 def create_voice_over(fileName, text):
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    filePath = f"{voiceoverDir}/{fileName}.mp3"
-    tts = TTS("tts_models/en/multi-dataset/tortoise-v2").to(device)
-    tts.tts_to_file(text=text, file_path=filePath)
-    return filePath
+    
+    print(' ok')
+    filePath = f'{voiceoverDir}/temp/{fileName}_temp.mp3'
+    tts = gTTS(text, lang='en', tld='us')
+    
+    tts.save(filePath)
+
+    audio = AudioSegment.from_mp3(filePath)
+    final = speedup(audio, playback_speed=1.2)
+    finalFilePath = f"{voiceoverDir}/{fileName}.mp3"
+    final.export(finalFilePath, format="mp3")
+    
+    return finalFilePath
+
