@@ -7,10 +7,8 @@ text = 'Hello everyone. Welcome to this video. Today we will do a simple text-to
 voiceoverDir = 'Voiceovers'
 
 def create_voice_over(fileName, text):
-    
-    print(' ok')
     filePath = f'{voiceoverDir}/temp/{fileName}_temp.mp3'
-    tts = gTTS(text, lang='en', tld='us')
+    tts = gTTS(text, lang='en', tld='co.uk')
     
     tts.save(filePath)
 

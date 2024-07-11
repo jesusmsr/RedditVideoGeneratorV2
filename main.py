@@ -1,4 +1,6 @@
 from moviepy.editor import *
+import moviepy.editor as mpe
+
 import reddit, screenshot, time, subprocess, random, configparser, sys, math
 from os import listdir
 from os.path import isfile, join
@@ -55,11 +57,23 @@ def createVideo():
 
     # Merge clips into single track
     contentOverlay = concatenate_videoclips(clips).set_position(("center", "center"))
+    
+    # Pick random background song
+    background_music = AudioFileClip('Music/1.mp3')
+    
+    
+    # Pick a random part of the song
+    max_start_time = background_music.duration - contentOverlay.duration
+    start_time = random.uniform(0, max_start_time)
+    
+    random_clip = background_music.subclip(start_time, start_time + contentOverlay.duration).fx(afx.volumex, 0.1)  
+    
+    final_audio = CompositeAudioClip([contentOverlay.audio, random_clip])
 
     # Compose background/foreground
     final = CompositeVideoClip(
         clips=[backgroundVideo, contentOverlay], 
-        size=backgroundVideo.size).set_audio(contentOverlay.audio)
+        size=backgroundVideo.size).set_audio(final_audio)
     final.duration = script.getDuration()
     final.set_fps(backgroundVideo.fps)
 
@@ -87,18 +101,30 @@ def createVideo():
     
     print(f"Removed temp files")
 
-    # Preview in VLC for approval before uploading
-    if (config["General"].getboolean("PreviewBeforeUpload")):
-        vlcPath = config["General"]["VLCPath"]
-        p = subprocess.Popen([vlcPath, outputFile])
-        print("Waiting for video review. Type anything to continue")
-        wait = input()
-
+    # Finish
     print("Video is ready to upload!")
     print(f"Title: {script.title}  File: {outputFile}")
     endTime = time.time()
     print(f"Total time: {endTime - startTime}")
 
+def rename_files(directory_path, template="ShortTemplate"):
+    # Get a list of files in the directory
+    files = os.listdir(directory_path)
+    for index, filename in enumerate(files):
+        # Construct the full file path
+        old_file_path = os.path.join(directory_path, filename)
+        # Get the file extension (if any)
+        _, file_extension = os.path.splitext(filename)
+        # Create new file name with the desired template
+        new_file_name = f"{template}_{index}{file_extension}"
+        new_file_path = os.path.join(directory_path, new_file_name)
+        # Rename the file
+        os.rename(old_file_path, new_file_path)
+        print(f"Renamed '{filename}' to '{new_file_name}'")
+        
 if __name__ == "__main__":
-    print(' MAIN')
+    
+    background_videos_directory_path = 'BackgroundVideos'
+    rename_files(background_videos_directory_path)
+    
     createVideo()
