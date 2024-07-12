@@ -25,7 +25,9 @@ def create_voice_over(fileName, text):
     tts.save(filePath)
 
     audio = AudioSegment.from_mp3(filePath)
+    one_second_silence = AudioSegment.silent(duration=250)  # 1000 milliseconds
     final = speedup(audio, playback_speed=1.2)
+    final = final + one_second_silence
     finalFilePath = f"{voiceoverDir}/{fileName}.mp3"
     final.export(finalFilePath, format="mp3")
     
