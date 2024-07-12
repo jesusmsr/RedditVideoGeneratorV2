@@ -3,8 +3,6 @@ from pydub import AudioSegment
 from pydub.effects import speedup
 import re
 
-text = 'Hello everyone. Welcome to this video. Today we will do a simple text-to-speech module with python. We are using the GitHub module called TTS.'
-
 voiceoverDir = 'Voiceovers'
 
 def remove_emoji(string):
@@ -26,7 +24,7 @@ def create_voice_over(fileName, text):
 
     audio = AudioSegment.from_mp3(filePath)
     one_second_silence = AudioSegment.silent(duration=250)  # 1000 milliseconds
-    final = speedup(audio, playback_speed=1.2)
+    final = speedup(audio, playback_speed=1.25)
     final = final + one_second_silence
     finalFilePath = f"{voiceoverDir}/{fileName}.mp3"
     final.export(finalFilePath, format="mp3")
