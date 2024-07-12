@@ -58,7 +58,6 @@ def __getReddit():
         user_agent=USER_AGENT
     )
 
-
 def __getContentFromPost(submission) -> VideoScript:
     content = VideoScript(submission.url, submission.title, submission.id)
     print(f"Creating video for post: {submission.title}")
@@ -66,9 +65,11 @@ def __getContentFromPost(submission) -> VideoScript:
 
     failedAttempts = 0
     for comment in submission.comments:
-        if(content.addCommentScene(markdown_to_text.markdown_to_text(comment.body), comment.id)):
+        if comment.body == '[removed]':
+            continue
+        if content.addCommentScene(markdown_to_text.markdown_to_text(comment.body), comment.id):
             failedAttempts += 1
-        if (content.canQuickFinish() or (failedAttempts > 2 and content.canBeFinished())):
+        if content.canQuickFinish() or (failedAttempts > 2 and content.canBeFinished()):
             break
     return content
 
